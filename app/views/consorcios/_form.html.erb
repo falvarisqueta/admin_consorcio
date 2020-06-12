@@ -1,19 +1,23 @@
 <%= form_with(model: consorcio, local: true) do |form| %>
-  <div>
-    <h4>Consorcio</h4>
-  </div>
-
-  <% if @consorcio.errors.any? %>
+  <% if consorcio.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(consorcio.errors.count, "error") %> prohibited this consorcio from being saved:</h2>
 
       <ul>
-        <% @consorcio.errors.full_messages.each do |message| %>
+        <% consorcio.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
+
+  <div class="actions">
+    <%= link_to 'Volver', consorcios_path %>
+    <button type="submit" class="btn btn-primary">Actualizar Datos</button>
+    <% unless consorcio.new_record? %>
+    <%= link_to 'Nueva Unidad', new_departamento_path(consorcio_id: consorcio.id) %>
+    <% end %>
+  </div>
 
   <div>
     <div class="form-group">
@@ -26,7 +30,31 @@
     </div>
   </div>
 
-  <div class="actions">
-    <br/> <%= form.submit %>
-  </div>
+  <% unless consorcio.new_record? %>
+  <h4>Unidades</h4>
+  <table>
+    <thead>
+      <tr>
+        <td>Identificador</td>
+        <td>Propietario</td>
+        <td>Inquilino</td>
+        <td>Coeficiente</td>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% consorcio.departamentos.each do |departamento| %>
+        <tr>
+          <td><%= departamento.identificador %></td>
+          <td><%= departamento.propietario %></td>
+          <td><%= departamento.inquilino %></td>
+          <td><%= departamento.coeficiente %></td>
+          <td><%= link_to 'Editar', departamento %></td>
+          <td><%= link_to 'Eliminar', departamento, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
 <% end %>

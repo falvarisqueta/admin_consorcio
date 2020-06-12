@@ -1,0 +1,41 @@
+<%= form_with(model: departamento, local: true) do |form| %>
+  <% if departamento.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(departamento.errors.count, "error") %> prohibited this departamento from being saved:</h2>
+
+      <ul>
+        <% departamento.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= link_to 'Volver', departamento.consorcio %>
+    <button type="submit" class="btn btn-primary">Actualizar Datos</button>
+  </div>
+
+  <div>
+    <div class="form-group">
+      <%= form.hidden_field :consorcio_id %>
+    </div>
+    <div class="form-group">
+      <%= form.label :identificador %>
+      <%= form.text_field :identificador, class: 'form-control'%>
+    </div>
+    <div class="form-group">
+      <%= form.label :propietario %>
+      <%= form.text_field :propietario, class: 'form-control'%>
+    </div>
+    <div class="form-group">
+      <%= form.label :inquilino %>
+      <%= form.text_field :inquilino, class: 'form-control'%>
+    </div>
+    <div class="form-group">
+      <%= form.label :coeficiente %>
+      <%= form.text_field :coeficiente, class: 'form-control'%>
+    </div>
+  </div>
+
+<% end %>

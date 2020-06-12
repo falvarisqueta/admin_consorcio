@@ -24,8 +24,8 @@ class ConsorciosController < ApplicationController
 
     respond_to do |format|
       if @consorcio.save
-        format.html { redirect_to consorcios_url, notice: 'Consorcio was successfully created.' }
-        format.json { head :no_content }
+        format.html { redirect_to @consorcio, notice: 'Consorcio was successfully created.' }
+        format.json { render :show, status: :created, location: @consorcio }
       else
         format.html { render :new }
         format.json { render json: @consorcio.errors, status: :unprocessable_entity }
@@ -38,10 +38,10 @@ class ConsorciosController < ApplicationController
   def update
     respond_to do |format|
       if @consorcio.update(consorcio_params)
-        format.html { redirect_to consorcios_url, notice: 'Consorcio was successfully updated.' }
-        format.json { head :no_content }
+        format.html { redirect_to @consorcio, notice: 'Consorcio was successfully updated.' }
+        format.json { render :show, status: :ok, location: @consorcio }
       else
-        format.html { render :edit }
+        format.html { render :show }
         format.json { render json: @consorcio.errors, status: :unprocessable_entity }
       end
     end
