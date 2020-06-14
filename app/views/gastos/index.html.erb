@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<%= form_tag({controller: "gastos", action: "index"}, id:"gastos_form", method: "get") do |form| %>
+
+<h1>Gastos - Consorcio <%= @consorcio.nombre %></h1>
+<%= link_to 'Volver', @consorcio %>
+
+<div class="form-group">
+  <%= label_tag :fecha %>
+  <%= select_tag :mes, options_for_select(1..12, @mes) %>
+  <%= select_tag :anio, options_for_select(3.years.ago.year..Date.today.year, @anio) %>
+  <%= hidden_field_tag :consorcio_id, @consorcio.id %>
+  <button type="submit" class="btn btn-primary">Mostrar</button>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <td>Fecha</td>
+      <td>Tipo</td>
+      <td>Descripcion</td>
+      <td>Importe</td>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @gastos.each do |gasto| %>
+      <tr>
+        <td><%= gasto.fecha %></td>
+        <td><%= gasto.tipo %></td>
+        <td><%= gasto.descripcion %></td>
+        <td><%= gasto.importe %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% end %>

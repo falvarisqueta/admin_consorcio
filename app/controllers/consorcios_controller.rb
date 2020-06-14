@@ -10,6 +10,8 @@ class ConsorciosController < ApplicationController
   # GET /consorcios/1
   # GET /consorcios/1.json
   def show
+    @consorcio.anio = params[:anio].present? ? params[:anio].to_i : Date.today.year
+    @consorcio.mes = params[:mes].present? ? params[:mes].to_i : Date.today.month
   end
 
   # GET /consorcios/new
@@ -38,6 +40,7 @@ class ConsorciosController < ApplicationController
   def update
     respond_to do |format|
       if @consorcio.update(consorcio_params)
+        binding.pry
         format.html { redirect_to @consorcio, notice: 'Consorcio was successfully updated.' }
         format.json { render :show, status: :ok, location: @consorcio }
       else
@@ -65,6 +68,6 @@ class ConsorciosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def consorcio_params
-      params.require(:consorcio).permit(:nombre, :direccion)
+      params.require(:consorcio).permit(:nombre, :direccion, :mes)
     end
 end

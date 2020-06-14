@@ -1,0 +1,41 @@
+<%= form_with(model: gasto, local: true) do |form| %>
+  <% if gasto.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(gasto.errors.count, "error") %> prohibited this gasto from being saved:</h2>
+
+      <ul>
+        <% gasto.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= link_to 'Volver', gasto.consorcio %>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </div>
+
+  <div>
+    <div class="form-group">
+      <%= form.hidden_field :consorcio_id %>
+    </div>
+    <div class="form-group">
+      <%= form.label :tipo %>
+      <%= form.select :tipo, ['Ordinario','Extraordinario']%>
+    </div>
+    <div class="datetime">
+      <%= form.label :fecha %>
+      <%= form.date_select :fecha, start_year:2020, end_year: Date.today.year, selected: Date.today, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= form.label :descripcion %>
+      <%= form.text_field :descripcion, class: 'form-control'%>
+    </div>
+    <div class="form-group">
+      <%= form.label :importe %>
+      <%= form.text_field :importe, class: 'form-control'%>
+    </div>
+  </div>
+
+<% end %>

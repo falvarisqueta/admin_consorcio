@@ -1,5 +1,5 @@
 class DepartamentosController < ApplicationController
-  before_action :set_departamento, only: [:show, :edit, :update, :destroy]
+  before_action :set_departamento, only: [:show, :update, :destroy]
 
   # GET /departamentos
   # GET /departamentos.json
@@ -57,7 +57,7 @@ class DepartamentosController < ApplicationController
   def destroy
     @departamento.destroy
     respond_to do |format|
-      format.html { redirect_to departamentos_url, notice: 'Departamento was successfully destroyed.' }
+      format.html { redirect_to consorcios_path, notice: 'Departamento was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
