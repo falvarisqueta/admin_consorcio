@@ -73,7 +73,7 @@ class GastosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def gasto_params
-      params.fetch(:gasto, {})
-      #params.require(:gasto).permit(:tipo, :fecha, :importe, :descripcion, :consorcio_id)
+      #params.fetch(:gasto, {})
+      params.require(:gasto).permit(:tipo, :fecha, :importe, :descripcion, :consorcio_id)
     end
 end
