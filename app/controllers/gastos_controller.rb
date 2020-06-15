@@ -9,7 +9,7 @@ class GastosController < ApplicationController
     @consorcio = Consorcio.find(params[:consorcio_id])
     @gastos = Gasto.para_consorcio(params[:consorcio_id]).para_fecha(@mes, @anio)
   end
-
+  
   # GET /gastos/1
   # GET /gastos/1.json
   def show

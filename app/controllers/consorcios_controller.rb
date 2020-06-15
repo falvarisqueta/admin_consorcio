@@ -1,5 +1,5 @@
 class ConsorciosController < ApplicationController
-  before_action :set_consorcio, only: [:show, :update, :destroy]
+  before_action :set_consorcio, only: [:show, :update, :destroy, :gastos, :liquidacion]
 
   # GET /consorcios
   # GET /consorcios.json
@@ -12,6 +12,19 @@ class ConsorciosController < ApplicationController
   def show
     @consorcio.anio = params[:anio].present? ? params[:anio].to_i : Date.today.year
     @consorcio.mes = params[:mes].present? ? params[:mes].to_i : Date.today.month
+  end
+
+  def gastos
+    @mes = params[:mes].present? ? params[:mes].to_i : Date.today.month
+    @anio = params[:anio] ? params[:anio].to_i : Date.today.year
+    @gastos = Gasto.para_consorcio(@consorcio.id).para_fecha(@mes, @anio)
+  end
+
+  def liquidacion
+    @mes = params[:mes].present? ? params[:mes].to_i : Date.today.month
+    @anio = params[:anio] ? params[:anio].to_i : Date.today.year
+    @gastos_ordinarios = Gasto.para_consorcio(@consorcio.id).ordinario.para_fecha(@mes, @anio)
+    @gastos_extraordinarios = Gasto.para_consorcio(@consorcio.id).extraordinario.para_fecha(@mes, @anio)
   end
 
   # GET /consorcios/new

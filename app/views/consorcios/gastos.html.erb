@@ -1,18 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<%= form_tag({controller: "gastos", action: "index"}, id:"gastos_form", method: "get") do |form| %>
+<%= form_tag({controller: "consorcios", action: "gastos"}, id:"gastos_form", method: "get") do |form| %>
 
 <h1>Gastos - Consorcio <%= @consorcio.nombre %></h1>
 <%= link_to 'Volver', @consorcio %>
-
+<%= link_to 'Liquidacion', liquidacion_consorcio_path(@consorcio, mes:@mes, anio:@anio), target: :_blank %>
 
 <div class="form-group">
   <%= label_tag :fecha %>
   <%= select_tag :mes, options_for_select(1..12, @mes) %>
   <%= select_tag :anio, options_for_select(3.years.ago.year..Date.today.year, @anio) %>
-  <%= hidden_field_tag :consorcio_id, @consorcio.id %>
   <button type="submit" class="btn btn-primary">Mostrar</button>
-  <%= link_to 'Resumen', gastos_resumen_path(consorcio_id: @consorcio.id, mes: @mes, anio:@anio) %>
 </div>
 
 <table>

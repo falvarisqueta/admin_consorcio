@@ -17,7 +17,7 @@
     <% unless consorcio.new_record? %>
     <%= link_to 'Nueva Unidad', new_departamento_path(consorcio_id: consorcio.id) %>
     <%= link_to 'Nuevo Gasto', new_gasto_path(consorcio_id: consorcio.id) %>
-    <%= link_to 'Historia Gastos', gastos_path(consorcio_id: consorcio.id) %>
+    <%= link_to 'Gastos', gastos_path(consorcio_id: consorcio.id) %>
     <% end %>
   </div>
 
@@ -32,9 +32,13 @@
     </div>
   </div>
 
-  <% unless consorcio.new_record? %>
+  <% unless consorcio.new_record?
+     gastos = consorcio.gastos.para_fecha(consorcio.mes, consorcio.anio)
+     importe_parcial_mes = gastos.sum(&:importe)
+  %>
 
-  <h4>Gastos del Mes</h4>
+
+  <h4>Gastos del Mes - Parcial: <%= importe_parcial_mes %> </h4>
   <table>
     <thead>
       <tr>
@@ -46,19 +50,20 @@
       </tr>
     </thead>
     <tbody>
-      <% consorcio.gastos.para_fecha(consorcio.mes, consorcio.anio).each do |gasto| %>
+      <% gastos.each do |gasto| %>
         <tr>
           <td><%= gasto.fecha %></td>
           <td><%= gasto.tipo %></td>
           <td><%= gasto.descripcion %></td>
           <td><%= gasto.importe %></td>
 
-          <td><%= link_to 'Editar', gasto %></td>
+          <td><%= link_to 'Ver', gasto %></td>
           <td><%= link_to 'Eliminar', gasto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
+
 
   <h4>Unidades</h4>
   <table>
@@ -68,6 +73,7 @@
         <td>Propietario</td>
         <td>Inquilino</td>
         <td>Coeficiente</td>
+        <td>Importe Parcial</td>
         <th colspan="2"></th>
       </tr>
     </thead>
@@ -78,7 +84,8 @@
           <td><%= departamento.propietario %></td>
           <td><%= departamento.inquilino %></td>
           <td><%= departamento.coeficiente %></td>
-          <td><%= link_to 'Editar', departamento %></td>
+          <td><%= importe_parcial_mes * departamento.coeficiente / 100 %></td>
+          <td><%= link_to 'Ver', departamento %></td>
           <td><%= link_to 'Eliminar', departamento, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>

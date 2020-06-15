@@ -1,0 +1,40 @@
+<h2>ADMINISTRACION CONSORCIO <%= @consorcio.nombre %></h2>
+<label> DIRECCION: <%= @consorcio.direccion %></label>
+<label> LIQUIDACION DE PAGO DE EXPENSAS CONSORCIO</label>
+<div>
+  <h2> PERIODO <%= "#{@mes} - #{@anio}"%> </h2>
+</div>
+<table>
+  <thead>
+    <tr>
+      <td><b>Detalle de expensas ordinarias</b></td>
+      <td style='text-align: right'><b>Valor</b></td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @gastos_ordinarios.each do |gasto| %>
+      <tr>
+        <td><%= gasto.descripcion %></td>
+        <td style='text-align: right'><%= gasto.importe %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td><h2>TOTAL ORDINARIAS</h2></td>
+      <td style='text-align: right'><h2><%= @gastos_ordinarios.sum(&:importe)%></h2></td>
+    </tr>
+    <tr>
+      <td><b>Detalle de expensas extraordinarias</b></td>
+      <td style='text-align: right'><b>Valor</b></td>
+    </tr>
+    <% @gastos_extraordinarios.each do |gasto| %>
+      <tr>
+        <td><%= gasto.descripcion %></td>
+        <td style='text-align: right'><%= gasto.importe %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td><h2>TOTAL EXTRAORDINARIAS</h2></td>
+      <td style='text-align: right'><h2><%= @gastos_extraordinarios.sum(&:importe)%></h2></td>
+    </tr>
+  </tbody>
+</table>
