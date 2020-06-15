@@ -17,7 +17,7 @@
     <% unless consorcio.new_record? %>
     <%= link_to 'Nueva Unidad', new_departamento_path(consorcio_id: consorcio.id) %>
     <%= link_to 'Nuevo Gasto', new_gasto_path(consorcio_id: consorcio.id) %>
-    <%= link_to 'Gastos', gastos_path(consorcio_id: consorcio.id) %>
+    <%= link_to 'Gastos', gastos_consorcio_path(@consorcio) %>
     <% end %>
   </div>
 
@@ -33,8 +33,7 @@
   </div>
 
   <% unless consorcio.new_record?
-     gastos = consorcio.gastos.para_fecha(consorcio.mes, consorcio.anio)
-     importe_parcial_mes = gastos.sum(&:importe)
+     importe_parcial_mes = @gastos.sum(&:importe)
   %>
 
 
@@ -50,7 +49,7 @@
       </tr>
     </thead>
     <tbody>
-      <% gastos.each do |gasto| %>
+      <% @gastos.each do |gasto| %>
         <tr>
           <td><%= gasto.fecha %></td>
           <td><%= gasto.tipo %></td>

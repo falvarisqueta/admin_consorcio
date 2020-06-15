@@ -10,8 +10,7 @@ class ConsorciosController < ApplicationController
   # GET /consorcios/1
   # GET /consorcios/1.json
   def show
-    @consorcio.anio = params[:anio].present? ? params[:anio].to_i : Date.today.year
-    @consorcio.mes = params[:mes].present? ? params[:mes].to_i : Date.today.month
+    @gastos = Gasto.para_consorcio(@consorcio.id).para_fecha(Date.today.month, Date.today.year)
   end
 
   def gastos
@@ -53,7 +52,6 @@ class ConsorciosController < ApplicationController
   def update
     respond_to do |format|
       if @consorcio.update(consorcio_params)
-        binding.pry
         format.html { redirect_to @consorcio, notice: 'Consorcio was successfully updated.' }
         format.json { render :show, status: :ok, location: @consorcio }
       else

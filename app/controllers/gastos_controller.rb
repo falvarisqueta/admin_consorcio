@@ -4,12 +4,9 @@ class GastosController < ApplicationController
   # GET /gastos
   # GET /gastos.json
   def index
-    @mes = params[:mes].present? ? params[:mes].to_i : Date.today.month
-    @anio = params[:anio] ? params[:anio].to_i : Date.today.year
-    @consorcio = Consorcio.find(params[:consorcio_id])
-    @gastos = Gasto.para_consorcio(params[:consorcio_id]).para_fecha(@mes, @anio)
+    @gastos = Gasto.all
   end
-  
+
   # GET /gastos/1
   # GET /gastos/1.json
   def show
