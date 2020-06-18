@@ -1,5 +1,5 @@
 class ConsorciosController < ApplicationController
-  before_action :set_consorcio, only: [:show, :update, :destroy, :gastos, :liquidacion]
+  before_action :set_consorcio, only: [:show, :update, :destroy, :contabilidad, :liquidacion, :generar_facturas]
 
   # GET /consorcios
   # GET /consorcios.json
@@ -13,12 +13,15 @@ class ConsorciosController < ApplicationController
     @gastos = Gasto.para_consorcio(@consorcio.id).para_fecha(Date.today.month, Date.today.year)
   end
 
-  def gastos
+  # GET /consorcios/1/contabilidad
+  def contabilidad
     @mes = params[:mes].present? ? params[:mes].to_i : Date.today.month
     @anio = params[:anio] ? params[:anio].to_i : Date.today.year
     @gastos = Gasto.para_consorcio(@consorcio.id).para_fecha(@mes, @anio)
+    @facturas = Factura.para_consorcio(@consorcio.id).para_fecha(@mes, @anio)
   end
 
+  # GET /consorcios/1/liquidacion
   def liquidacion
     @mes = params[:mes].present? ? params[:mes].to_i : Date.today.month
     @anio = params[:anio] ? params[:anio].to_i : Date.today.year
@@ -45,6 +48,25 @@ class ConsorciosController < ApplicationController
         format.json { render json: @consorcio.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # POST /generar_facturas
+  # POST /generar_facturas.json
+  def generar_facturas
+    mes = params[:mes].present? ? params[:mes].to_i : Date.today.month
+    anio = params[:anio] ? params[:anio].to_i : Date.today.year
+
+    gasto_mensual = Gasto.para_consorcio(@consorcio.id).para_fecha(mes, anio).sum(&:importe)
+    @consorcio.departamentos.each do |departamento|
+      Factura.create(
+        departamento: departamento,
+        periodo:Date.new(anio, mes, 1).end_of_month,
+        importe: gasto_mensual * departamento.coeficiente / 100,
+        estado: 'Pendiente'
+      )
+    end
+
+    redirect_back(fallback_location: root_path, notice: "Facturacion Para Periodo #{mes} - #{anio} Generada.")
   end
 
   # PATCH/PUT /consorcios/1

@@ -17,7 +17,7 @@
     <% unless consorcio.new_record? %>
     <%= link_to 'Nueva Unidad', new_departamento_path(consorcio_id: consorcio.id) %>
     <%= link_to 'Nuevo Gasto', new_gasto_path(consorcio_id: consorcio.id) %>
-    <%= link_to 'Gastos', gastos_consorcio_path(@consorcio) %>
+    <%= link_to 'Contabilidad', contabilidad_consorcio_path(@consorcio) %>
     <% end %>
   </div>
 

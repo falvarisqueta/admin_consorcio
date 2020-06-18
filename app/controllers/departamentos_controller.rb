@@ -18,10 +18,6 @@ class DepartamentosController < ApplicationController
     @departamento.consorcio_id = params[:consorcio_id]
   end
 
-  # GET /departamentos/1/edit
-  def edit
-  end
-
   # POST /departamentos
   # POST /departamentos.json
   def create

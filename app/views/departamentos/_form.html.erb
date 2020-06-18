@@ -38,4 +38,33 @@
     </div>
   </div>
 
+  <h2>Facturas</h2>
+  <table>
+    <thead>
+      <tr>
+        <td>Departamento</td>
+        <td>Periodo</td>
+        <td>Importe</td>
+        <td>Estado</td>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% departamento.facturas.each do |factura| %>
+        <tr>
+          <td><%= factura.departamento.identificador %></td>
+          <td><%= factura.periodo %></td>
+          <td><%= factura.importe %></td>
+          <td><%= factura.estado %></td>
+          <td>
+            <%= link_to 'Ver', factura , target: :_blank%>
+            <% if factura.estado == 'Pendiente' %>
+              <%= link_to 'Pagar', factura, method: :put %>
+            <% end %>
+            <%= link_to 'Eliminar', factura, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>
