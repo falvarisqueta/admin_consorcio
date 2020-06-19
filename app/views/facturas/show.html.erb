@@ -1,9 +1,89 @@
-<h2>ADMINISTRACION CONSORCIO <%= @consorcio.nombre %></h2>
-<label> DIRECCION: <%= @consorcio.direccion %></label>
-<label> LIQUIDACION DE PAGO DE EXPENSAS CONSORCIO</label>
-<div>
-  <h2> PERIODO <%= @factura.fecha %> </h2>
-</div>
-<label> DEPARTAMENTO: <%= @departamento.identificador %></label>
-<label> PROPIETARIO: <%= @departamento.propietario %></label>
-<label> IMPORTE: <%= @factura.importe %></label>
+<table class="factura">
+  <tr>
+    <td class="left">
+      <label>Suarez Negocios inmobiliarios</label>
+      <label>25 de Mayo Nro 179 de 10 a 13 hs</label>
+      <label>Tel 249460266</label>
+      <label>suareznegociosinmobiliarios@gmail.com</label>
+    </td>
+    <td class="right">
+      <label>Consorcio: <%= @consorcio.nombre %> </label>
+      <label>Direccion: <%= @consorcio.direccion %> </label>
+      <label>ORIGINAL</label>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Periodo: <%= "#{@factura.periodo.month} - #{@factura.periodo.year}" %> </label>
+      <label>Co-propietario: <%= @departamento.propietario%></label>
+      <label>Unidad: <%= @departamento.identificador%></label>
+    </td>
+    <td class="right">
+      <label>Lugar de pago: Constitucion 510</label>
+      <label>Yrigoyen 830, Quintana 592 </label>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="splitter">
+      <label>DETALLE</label>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Gastos comunes: <%= "#{@departamento.coeficiente} % (#{@gasto_periodo}) " %> </label>
+      <label>Saldo Anterior:</label>
+      <label>Intereses:</label>
+      <label>1er Vencimiento: <%= Date.new(@factura.periodo.year, @factura.periodo.month, 10).to_s%> </label>
+      <label>2do Vencimiento: <%= Date.new(@factura.periodo.year, @factura.periodo.month, 20).to_s %> </label>
+    </td>
+    <td class="right">
+      <label> $ <%= @gasto_periodo * @departamento.coeficiente / 100 %> </label>
+      <label> $ </label>
+      <label> $ </label>
+      <label> Tota a pagar: </label>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="splitter">
+      <label>RECIBO AUTORIZADO PARA EL CO-PROPIETARIO</label>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Fecha: ___ / ____ / _____ </label>
+      <label>Importe Abonado: $ ________ </label>
+      <label>Recibi Conforme: __________ </label>
+    </td>
+    <td class="right">
+      <label> Total </label>
+      <label> A cta exp anteriores </label>
+      <label> A cta exp futuras</label>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>RECIBO PARA ADMINISTRADOR</label>
+      <label>Suarez Negocios Inmobiliarios</label>
+      <label>Recibo Nro </label>
+      <label>Co-Propietario </label>
+      <label>Consorcio </label>
+      <label>UF </label>
+      <label>Depto </label>
+      <label>Periodo Liquidacion </label>
+      <label>EXPENSAS ORDINARIAS A PAGAR </label>
+      <label> $ </label>
+    </td>
+    <td>
+      <label>RECIBO PARA VENTANILLA DE PAGO</label>
+      <label>Suarez Negocios Inmobiliarios</label>
+      <label>Recibo Nro </label>
+      <label>Co-Propietario </label>
+      <label>Consorcio </label>
+      <label>UF </label>
+      <label>Depto </label>
+      <label>Periodo Liquidacion </label>
+      <label>EXPENSAS ORDINARIAS A PAGAR </label>
+      <label> $ </label>
+    </td>
+  </tr>
+</table>

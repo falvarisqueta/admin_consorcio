@@ -6,6 +6,7 @@ class FacturasController < ApplicationController
   def show
     @departamento = @factura.departamento
     @consorcio = @factura.departamento.consorcio
+    @gasto_periodo = Gasto.para_consorcio(@consorcio.id).para_fecha(@factura.periodo.month, @factura.periodo.year).sum(&:importe)
   end
 
   # GET /facturas/new

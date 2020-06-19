@@ -1,3 +1,26 @@
 // Place all the styles related to the facturas controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.factura td {
+  vertical-align: top;
+}
+
+.factura label {
+  padding: 2px;
+}
+
+.splitter {
+ background-color: black;
+ color: white;
+ text-align: center;
+}
+
+.right {
+  padding-left: 150px;
+  text-align: right;
+}
+
+.recibo_ventanilla {
+  padding-left: 150px;
+}

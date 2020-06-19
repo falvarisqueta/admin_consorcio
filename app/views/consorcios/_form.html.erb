@@ -41,7 +41,8 @@
   <table>
     <thead>
       <tr>
-        <td>Fecha</td>
+        <td>Fecha Gasto</td>
+        <td>Fecha Cobro</td>
         <td>Tipo</td>
         <td>Descripcion</td>
         <td>Importe</td>
@@ -52,6 +53,7 @@
       <% @gastos.each do |gasto| %>
         <tr>
           <td><%= gasto.fecha %></td>
+          <td><%= gasto.fecha_cobro %></td>
           <td><%= gasto.tipo %></td>
           <td><%= gasto.descripcion %></td>
           <td><%= gasto.importe %></td>
