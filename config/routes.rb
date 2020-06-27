@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  resources :facturas
+  resources :facturas do
+    post :pagar, on: :member
+    get :imprimir, on: :member
+  end
   resources :gastos
   resources :departamentos
   resources :consorcios do

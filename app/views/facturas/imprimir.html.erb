@@ -1,28 +1,3 @@
-<%= javascript_include_tag('facturas_show.js') %>
-
-<%= form_with(model: @factura, local: true) do |form| %>
-  <h1> Consorcio <%= @departamento.consorcio.nombre %> - Unidad: <%= @departamento.identificador %> - Periodo: <%= @factura.fecha %></h1>
-  <% if @factura.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(factura.errors.count, "error") %> prohibited this factura from being saved:</h2>
-
-      <ul>
-        <% @factura.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= link_to 'Volver', @departamento %>
-    <% if @factura.estado == 'Pendiente' %>
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <%= link_to 'Pagar', pagar_factura_path(@factura), method: :post %>
-    <% end %>
-    <%= link_to 'Imprimir', imprimir_factura_path(@factura), method: :get, target: :blank %>
-  </div>
-
   <table class="factura">
     <tr>
       <td class="left">
@@ -39,7 +14,7 @@
     </tr>
     <tr>
       <td>
-        <label>Periodo: <%= "#{@factura.periodo.month} - #{@factura.periodo.year}" %> </label>
+        <label>Periodo: <%= @factura.fecha_periodo %> </label>
         <label>Co-propietario: <%= @departamento.propietario%></label>
         <label>Unidad: <%= @departamento.identificador%></label>
       </td>
@@ -55,9 +30,10 @@
     </tr>
     <tr>
       <td>
+
         <label>Gastos comunes: <%= "$ #{@departamento.coeficiente} % (#{@gasto_periodo}) " %> </label>
-        <label>Saldo Anterior: $ <%= form.text_field :saldo_anterior, class: 'form-control', onchange: 'actualizarSaldoAnterior(this);'%></label>
-        <label>Intereses: $ <%= form.text_field :intereses, class: 'form-control', onchange: 'actualizarIntereses(this);'%></label>
+        <label>Saldo Anterior: $ <%= @factura.saldo_anterior %></label>
+        <label>Intereses: $ <%= @factura.intereses %></label>
         <label>1er Vencimiento: <%= Date.new(@factura.periodo.year, @factura.periodo.month, 10).to_s%> </label>
         <label>2do Vencimiento: <%= Date.new(@factura.periodo.year, @factura.periodo.month, 20).to_s %> </label>
       </td>
@@ -76,9 +52,8 @@
     </tr>
     <tr>
       <td>
-        <label>Fecha: <%= form.date_select :fecha, start_year:2020, end_year: Date.today.year, selected: Date.today, class: 'form-control' %></label>
-        <label>Importe Abonado: $ <%= form.text_field :importe_abonado, class: 'form-control'%></label>
-        Nro Recibo: <%= form.text_field :nro_recibo, class: 'form-control', onchange: 'actualizarNroRecibo(this);'%>
+        <label>Fecha: <%= @factura.fecha %></label>
+        <label>Importe Abonado: $ <%= @factura.importe_abonado %></label>
         <label>Recibi Conforme: __________ </label>
       </td>
       <td class="right">
@@ -96,7 +71,7 @@
         <label>Consorcio: <%= @departamento.consorcio.nombre%></label>
         <label>UF: <%= @departamento.identificador%></label>
         <label>Depto </label>
-        <label>Periodo Liquidacion <%= @factura.fecha%></label>
+        <label>Periodo Liquidacion <%= @factura.fecha_periodo %></label>
         <label>EXPENSAS ORDINARIAS A PAGAR </label>
         <label> $ </label>
       </td>
@@ -108,10 +83,9 @@
         <label>Consorcio: <%= @departamento.consorcio.nombre%></label>
         <label>UF: <%= @departamento.identificador%></label>
         <label>Depto </label>
-        <label>Periodo Liquidacion <%= @factura.fecha%></label>
+        <label>Periodo Liquidacion <%= @factura.fecha_periodo %></label>
         <label>EXPENSAS ORDINARIAS A PAGAR </label>
         <label> $ </label>
       </td>
     </tr>
   </table>
-<% end %>

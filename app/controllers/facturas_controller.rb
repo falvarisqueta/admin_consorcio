@@ -1,5 +1,5 @@
 class FacturasController < ApplicationController
-  before_action :set_factura, only: [:show, :update, :destroy]
+  before_action :set_factura, only: [:show, :update, :destroy, :pagar, :imprimir]
 
   # GET /facturas/1
   # GET /facturas/1.json
@@ -9,6 +9,11 @@ class FacturasController < ApplicationController
     @gasto_periodo = Gasto.para_consorcio(@consorcio.id).para_fecha(@factura.periodo.month, @factura.periodo.year).sum(&:importe)
   end
 
+  def imprimir
+    @departamento = @factura.departamento
+    @consorcio = @factura.departamento.consorcio
+    @gasto_periodo = Gasto.para_consorcio(@consorcio.id).para_fecha(@factura.periodo.month, @factura.periodo.year).sum(&:importe)
+  end
   # GET /facturas/new
   def new
     @factura = Factura.new
@@ -18,11 +23,26 @@ class FacturasController < ApplicationController
   # PATCH/PUT /facturas/1
   # PATCH/PUT /facturas/1.json
   def update
-    if @factura.update(estado: 'Pagado')
-      redirect_back(fallback_location: root_path, notice: "Factura Pagada")
-    else
-      format.html { render :show }
-      format.json { render json: @factura.errors, status: :unprocessable_entity }
+    respond_to do |format|
+      if @factura.update(factura_params)
+        format.html { redirect_to @factura, notice: 'Factura Actualizada.' }
+        format.json { render :show, status: :ok, location: @factura }
+      else
+        format.html { render :show }
+        format.json { render json: @factura.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def pagar
+    respond_to do |format|
+      if @factura.update(estado: 'Pagada')
+        format.html { redirect_to @factura, notice: 'Factura pagada.' }
+        format.json { render :show, status: :ok, location: @factura }
+      else
+        format.html { render :show }
+        format.json { render json: @factura.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -45,6 +65,6 @@ class FacturasController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def factura_params
-      params.fetch(:factura, {})
+      params.require(:factura).permit(:saldo_anterior, :intereses, :fecha, :importe_abonado, :nro_recibo)
     end
 end
