@@ -1,6 +1,6 @@
   <table class="factura">
     <tr>
-      <td class="left">
+      <td>
         <label>Suarez Negocios inmobiliarios</label>
         <label>25 de Mayo Nro 179 de 10 a 13 hs</label>
         <label>Tel 249460266</label>
@@ -51,19 +51,19 @@
       </td>
     </tr>
     <tr>
-      <td>
+      <td class="recibos">
         <label>Fecha: <%= @factura.fecha %></label>
         <label>Importe Abonado: $ <%= @factura.importe_abonado %></label>
         <label>Recibi Conforme: __________ </label>
       </td>
-      <td class="right">
+      <td class="right recibos">
         <label> <input type="checkbox"></input> Total </label>
         <label> <input type="checkbox"> A cta exp anteriores </label>
         <label> <input type="checkbox"> A cta exp futuras</label>
       </td>
     </tr>
     <tr>
-      <td>
+      <td class="recibos cliente">
         <label>RECIBO PARA ADMINISTRADOR</label>
         <label>Suarez Negocios Inmobiliarios</label>
         <label>Recibo Nro <%= @factura.nro_recibo %></label>
@@ -73,9 +73,9 @@
         <label>Depto </label>
         <label>Periodo Liquidacion <%= @factura.fecha_periodo %></label>
         <label>EXPENSAS ORDINARIAS A PAGAR </label>
-        <label> $ </label>
+        <label> $ <%= @factura.importe_abonado %> </label>
       </td>
-      <td>
+      <td class="recibos ventanilla">
         <label>RECIBO PARA VENTANILLA DE PAGO</label>
         <label>Suarez Negocios Inmobiliarios</label>
         <label>Recibo Nro <%= @factura.nro_recibo %></label>
@@ -85,7 +85,7 @@
         <label>Depto </label>
         <label>Periodo Liquidacion <%= @factura.fecha_periodo %></label>
         <label>EXPENSAS ORDINARIAS A PAGAR </label>
-        <label> $ </label>
+        <label>$ <%= @factura.importe_abonado %></label>
       </td>
     </tr>
   </table>

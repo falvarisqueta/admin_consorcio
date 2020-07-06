@@ -7,11 +7,12 @@
 }
 
 .factura label {
-  padding: 2px;
+  margin: 10px;
 }
 
 .splitter {
- background-color: black;
+ background-color: black !important;
+ -webkit-print-color-adjust: exact;
  color: white;
  text-align: center;
 }
@@ -21,6 +22,15 @@
   text-align: right;
 }
 
-.recibo_ventanilla {
-  padding-left: 150px;
+.recibos {
+  padding-bottom: 20px;
+}
+
+.ventanilla {
+  border-left: 2px solid black;
+  padding-left: 100px;
+}
+
+.cliente {
+  padding-right: 50px;
 }
