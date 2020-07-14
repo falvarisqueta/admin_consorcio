@@ -17,4 +17,10 @@ function calcularImporte() {
   total = document.getElementById('total');
   subtotal = gasto_mensual + saldo_anterior + intereses;
   total.innerText = "$ " + subtotal.toFixed(2);
+
+  total_recibo_cliente = document.getElementById('total_recibo_cliente');
+  total_recibo_cliente.innerText = "$ " + subtotal.toFixed(2);
+
+  total_recibo_rapipago = document.getElementById('total_recibo_rapipago');
+  total_recibo_rapipago.innerText = "$ " + subtotal.toFixed(2);
 }
