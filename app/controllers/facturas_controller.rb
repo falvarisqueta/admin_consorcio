@@ -11,6 +11,8 @@ class FacturasController < ApplicationController
     @gasto_ordinario_periodo_departamento = @gasto_ordinario_periodo * @departamento.coeficiente / 100
     @gasto_extraordinario_periodo_departamento = @gasto_extraordinario_periodo * @departamento.coeficiente / 100
     @gasto_mensual_departamento = @gasto_ordinario_periodo_departamento + @gasto_extraordinario_periodo_departamento
+    @factura.importe_abonado = @gasto_mensual_departamento + @factura.saldo_anterior + @factura.intereses if @factura.importe_abonado.nil?
+    @factura.save
   end
 
   def imprimir

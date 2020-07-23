@@ -69,7 +69,7 @@
         <label id='gasto_extraordinario_periodo_departamento'> $ <%= @gasto_extraordinario_periodo_departamento %> </label>
         <label id='saldo_anterior_subtotal'> $ <%= @factura.saldo_anterior %></label>
         <label id='intereses_subtotal'> $ <%= @factura.intereses %></label>
-        <label id='total'> Tota a pagar: $ <%= @gasto_mensual_departamento + @factura.saldo_anterior + @factura.intereses%> </label>
+        <label id='total'> Tota a pagar: $ <%= @gasto_mensual_departamento + @factura.saldo_anterior + @factura.intereses %> </label>
       </td>
     </tr>
     <tr>
@@ -80,7 +80,7 @@
     <tr>
       <td>
         <label>Fecha: <%= form.date_select :fecha, start_year:2020, end_year: Date.today.year, selected: Date.today, class: 'form-control' %></label>
-        <label>Importe Abonado: $ <%= form.text_field :importe_abonado, class: 'form-control'%></label>
+        <label>Importe Abonado: $ <%= form.text_field :importe_abonado, class: 'form-control' %></label>
         Nro Recibo: <%= form.text_field :nro_recibo, class: 'form-control', onchange: 'actualizarNroRecibo(this);'%>
         <label>Recibi Conforme: __________ </label>
       </td>
