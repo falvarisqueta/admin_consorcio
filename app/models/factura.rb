@@ -7,4 +7,12 @@ class Factura < ApplicationRecord
   def fecha_periodo
     "#{periodo.month} - #{periodo.year}"
   end
+
+  def imprimir?
+    importe_abonado.present?
+  end
+
+  def pendiente?
+    estado == 'Pendiente'
+  end
 end

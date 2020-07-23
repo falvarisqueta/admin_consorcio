@@ -7,7 +7,7 @@
         <label>suareznegociosinmobiliarios@gmail.com</label>
       </td>
       <td class="right">
-        <label>Consorcio: <%= @consorcio.nombre %> </label>
+        <label><%= @consorcio.nombre %> </label>
         <label>Direccion: <%= @consorcio.direccion %> </label>
         <label>ORIGINAL</label>
       </td>
@@ -30,19 +30,19 @@
     </tr>
     <tr>
       <td>
-
-        <label>Gastos comunes: <%= "$ #{@departamento.coeficiente} % (#{@gasto_periodo}) " %> </label>
+        <label>Gastos ordinarios: <%= "$ #{@departamento.coeficiente} % (#{@gasto_ordinario_periodo}) " %> </label>
+        <label>Gastos extraordinarios: <%= "$ #{@departamento.coeficiente} % (#{@gasto_extraordinario_periodo}) " %> </label>
         <label>Saldo Anterior: $ <%= @factura.saldo_anterior %></label>
         <label>Intereses: $ <%= @factura.intereses %></label>
         <label>1er Vencimiento: <%= Date.new(@factura.periodo.year, @factura.periodo.month, 10).to_s%> </label>
         <label>2do Vencimiento: <%= Date.new(@factura.periodo.year, @factura.periodo.month, 20).to_s %> </label>
       </td>
-      <% gasto_mensual = @gasto_periodo * @departamento.coeficiente / 100%>
       <td class="right">
-        <label id='gasto_mensual'> $ <%= gasto_mensual %> </label>
+        <label id='gasto_ordinario_periodo_departamento'> $ <%= @gasto_ordinario_periodo_departamento %> </label>
+        <label id='gasto_extraordinario_periodo_departamento'> $ <%= @gasto_extraordinario_periodo_departamento %> </label>
         <label id='saldo_anterior_subtotal'> $ <%= @factura.saldo_anterior %></label>
         <label id='intereses_subtotal'> $ <%= @factura.intereses %></label>
-        <label id='total'> Tota a pagar: $ <%= gasto_mensual + @factura.saldo_anterior + @factura.intereses%> </label>
+        <label id='total'> Tota a pagar: $ <%= @gasto_mensual_departamento + @factura.saldo_anterior + @factura.intereses%> </label>
       </td>
     </tr>
     <tr>

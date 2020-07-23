@@ -6,13 +6,21 @@ class FacturasController < ApplicationController
   def show
     @departamento = @factura.departamento
     @consorcio = @factura.departamento.consorcio
-    @gasto_periodo = Gasto.para_consorcio(@consorcio.id).para_fecha(@factura.periodo.month, @factura.periodo.year).sum(&:importe)
+    @gasto_ordinario_periodo = Gasto.para_consorcio(@consorcio.id).para_fecha(@factura.periodo.month, @factura.periodo.year).ordinario.sum(&:importe)
+    @gasto_extraordinario_periodo = Gasto.para_consorcio(@consorcio.id).para_fecha(@factura.periodo.month, @factura.periodo.year).extraordinario.sum(&:importe)
+    @gasto_ordinario_periodo_departamento = @gasto_ordinario_periodo * @departamento.coeficiente / 100
+    @gasto_extraordinario_periodo_departamento = @gasto_extraordinario_periodo * @departamento.coeficiente / 100
+    @gasto_mensual_departamento = @gasto_ordinario_periodo_departamento + @gasto_extraordinario_periodo_departamento
   end
 
   def imprimir
     @departamento = @factura.departamento
     @consorcio = @factura.departamento.consorcio
-    @gasto_periodo = Gasto.para_consorcio(@consorcio.id).para_fecha(@factura.periodo.month, @factura.periodo.year).sum(&:importe)
+    @gasto_ordinario_periodo = Gasto.para_consorcio(@consorcio.id).para_fecha(@factura.periodo.month, @factura.periodo.year).ordinario.sum(&:importe)
+    @gasto_extraordinario_periodo = Gasto.para_consorcio(@consorcio.id).para_fecha(@factura.periodo.month, @factura.periodo.year).extraordinario.sum(&:importe)
+    @gasto_ordinario_periodo_departamento = @gasto_ordinario_periodo * @departamento.coeficiente / 100
+    @gasto_extraordinario_periodo_departamento = @gasto_extraordinario_periodo * @departamento.coeficiente / 100
+    @gasto_mensual_departamento = @gasto_ordinario_periodo_departamento + @gasto_extraordinario_periodo_departamento
   end
   # GET /facturas/new
   def new
