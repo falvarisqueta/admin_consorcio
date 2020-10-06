@@ -1,70 +1,77 @@
-<p id="notice"><%= notice %></p>
-
 <%= form_tag({controller: "consorcios", action: "contabilidad"}, id:"gastos_form", method: "get") do |form| %>
 
-<h1>Contabilidad - Consorcio <%= @consorcio.nombre %></h1>
-<%= link_to 'Volver', @consorcio %>
-<%= link_to 'Ver Liquidacion', liquidacion_consorcio_path(@consorcio, mes:@mes, anio:@anio), target: :_blank %>
-<% unless @facturas.any? %>
-  <%= link_to 'Generar Facturas', generar_facturas_consorcio_path(@consorcio, mes:@mes, anio:@anio), method: :post %>
-<% end %>
+<nav class="navbar-dark bg-dark consorcios_menu">
+  <%= link_to 'Volver', @consorcio, class: 'btn btn-secondary' %>
+  <%= link_to 'Ver Liquidacion', liquidacion_consorcio_path(@consorcio, mes:@mes, anio:@anio), target: :_blank, class: 'btn btn-secondary' %>
+  <% unless @facturas.any? %>
+    <%= link_to 'Generar Facturas', generar_facturas_consorcio_path(@consorcio, mes:@mes, anio:@anio), method: :post, class: 'btn btn-secondary' %>
+  <% end %>
+</nav>
+<div class="consorcios_form">
+  <h4>Contabilidad - Consorcio <%= @consorcio.nombre %></h4>
+  <h4><%= label_tag :Periodo %></h4>
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <%= select_tag :mes, options_for_select(1..12, @mes), class: 'form-control' %>
+    </div>
+    <div class="form-group col-md-2">
+      <%= select_tag :anio, options_for_select(3.years.ago.year..Date.today.year, @anio), class: 'form-control' %>
+    </div>
+    <div class="form-group col-md-2">
+      <button type="submit" class="btn btn-secondary">Mostrar</button>
+    </div>
+  </div>
 
-<div class="form-group">
-  <h2><%= label_tag :Periodo %></h2>
-  <%= select_tag :mes, options_for_select(1..12, @mes) %>
-  <%= select_tag :anio, options_for_select(3.years.ago.year..Date.today.year, @anio) %>
-  <button type="submit" class="btn btn-primary">Mostrar</button>
+  <h4>Gastos</h4>
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>Fecha Gasto</th>
+        <th>Fecha Cobro</th>
+        <th>Tipo</th>
+        <th>Descripcion</th>
+        <th>Importe</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @gastos.each do |gasto| %>
+        <tr>
+          <td><%= gasto.fecha %></td>
+          <td><%= gasto.fecha_cobro %></td>
+          <td><%= gasto.tipo %></td>
+          <td><%= gasto.descripcion %></td>
+          <td><%= gasto.importe %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <h4>Facturas</h4>
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>Departamento</th>
+        <th>Periodo</th>
+        <th>Importe</th>
+        <th>Estado</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @facturas.each do |factura| %>
+        <tr>
+          <td><%= factura.departamento.identificador %></td>
+          <td><%= factura.fecha_periodo %></td>
+          <td><%= factura.importe %></td>
+          <td><%= factura.estado %></td>
+          <td>
+            <%= link_to 'Ver', factura, target: :_blank %>
+            <%= link_to 'Eliminar', factura, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
-
-<h2>Gastos</h2>
-<table>
-  <thead>
-    <tr>
-      <td>Fecha Gasto</td>
-      <td>Fecha Cobro</td>
-      <td>Tipo</td>
-      <td>Descripcion</td>
-      <td>Importe</td>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @gastos.each do |gasto| %>
-      <tr>
-        <td><%= gasto.fecha %></td>
-        <td><%= gasto.fecha_cobro %></td>
-        <td><%= gasto.tipo %></td>
-        <td><%= gasto.descripcion %></td>
-        <td><%= gasto.importe %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<h2>Facturas</h2>
-<table>
-  <thead>
-    <tr>
-      <td>Departamento</td>
-      <td>Periodo</td>
-      <td>Importe</td>
-      <td>Estado</td>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @facturas.each do |factura| %>
-      <tr>
-        <td><%= factura.departamento.identificador %></td>
-        <td><%= factura.fecha_periodo %></td>
-        <td><%= factura.importe %></td>
-        <td><%= factura.estado %></td>
-        <td>
-          <%= link_to 'Ver', factura, target: :_blank %>
-          <%= link_to 'Eliminar', factura, method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 <% end %>

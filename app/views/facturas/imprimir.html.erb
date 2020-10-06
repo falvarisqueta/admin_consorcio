@@ -1,89 +1,94 @@
-  <table class="factura">
-    <tr>
-      <td>
-        <label>Suarez Negocios inmobiliarios</label>
-        <label>25 de Mayo Nro 179 de 10 a 13 hs</label>
-        <label>Tel 2494606266</label>
-        <label>suareznegociosinmobiliarios@gmail.com</label>
-      </td>
-      <td class="right">
-        <label><%= @consorcio.nombre %> </label>
-        <label>ORIGINAL</label>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <label>Periodo: <%= @factura.fecha_periodo %> </label>
-        <label>Co-propietario: <%= @departamento.propietario%></label>
-        <label>Unidad: <%= @departamento.identificador%></label>
-      </td>
-      <td class="right">
-        <label>Lugar de pago: 25 de Mayo 179</label>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2" class="splitter">
-        <label>DETALLE</label>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <label>Gastos ordinarios: <%= "$ #{@departamento.coeficiente} % (#{@gasto_ordinario_periodo}) " %> </label>
-        <label>Gastos extraordinarios: <%= "$ #{@departamento.coeficiente} % (#{@gasto_extraordinario_periodo}) " %> </label>
-        <label>Saldo Anterior: $ <%= @factura.saldo_anterior %></label>
-        <label>Intereses: $ <%= @factura.intereses %></label>
-        <label>1er Vencimiento: <%= Date.new(@factura.periodo.year, @factura.periodo.month, 10).to_s%> </label>
-        <label>2do Vencimiento: <%= Date.new(@factura.periodo.year, @factura.periodo.month, 20).to_s %> </label>
-      </td>
-      <td class="right">
-        <label id='gasto_ordinario_periodo_departamento'> $ <%= @gasto_ordinario_periodo_departamento %> </label>
-        <label id='gasto_extraordinario_periodo_departamento'> $ <%= @gasto_extraordinario_periodo_departamento %> </label>
-        <label id='saldo_anterior_subtotal'> $ <%= @factura.saldo_anterior %></label>
-        <label id='intereses_subtotal'> $ <%= @factura.intereses %></label>
-        <label id='total'> Tota a pagar: $ <%= @gasto_mensual_departamento + @factura.saldo_anterior + @factura.intereses%> </label>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2" class="splitter">
-        <label>RECIBO AUTORIZADO PARA EL CO-PROPIETARIO</label>
-      </td>
-    </tr>
-    <tr>
-      <td class="recibos">
-        <label>Fecha: <%= @factura.fecha %></label>
-        <label>Importe Abonado: $ <%= @factura.importe_abonado %></label>
-        <label>Recibi Conforme: __________ </label>
-      </td>
-      <td class="right recibos">
-        <label> <input type="checkbox"></input> Total </label>
-        <label> <input type="checkbox"> A cta exp anteriores </label>
-        <label> <input type="checkbox"> A cta exp futuras</label>
-      </td>
-    </tr>
-    <tr>
-      <td class="recibos cliente">
-        <label>RECIBO PARA ADMINISTRADOR</label>
-        <label>Suarez Negocios Inmobiliarios</label>
-        <label>Recibo Nro <%= @factura.nro_recibo %></label>
-        <label>Co-Propietario: <%= @departamento.propietario%></label>
-        <label>Consorcio: <%= @departamento.consorcio.nombre%></label>
-        <label>UF: <%= @departamento.identificador%></label>
-        <label>Depto </label>
-        <label>Periodo Liquidacion <%= @factura.fecha_periodo %></label>
-        <label>EXPENSAS ORDINARIAS A PAGAR </label>
-        <label> $ <%= @factura.importe_abonado %> </label>
-      </td>
-      <td class="recibos ventanilla">
-        <label>RECIBO PARA VENTANILLA DE PAGO</label>
-        <label>Suarez Negocios Inmobiliarios</label>
-        <label>Recibo Nro <%= @factura.nro_recibo %></label>
-        <label>Co-Propietario: <%= @departamento.propietario%></label>
-        <label>Consorcio: <%= @departamento.consorcio.nombre%></label>
-        <label>UF: <%= @departamento.identificador%></label>
-        <label>Depto </label>
-        <label>Periodo Liquidacion <%= @factura.fecha_periodo %></label>
-        <label>EXPENSAS ORDINARIAS A PAGAR </label>
-        <label>$ <%= @factura.importe_abonado %></label>
-      </td>
-    </tr>
-  </table>
+<div class="consorcios_form">
+  <h4><%= @departamento.consorcio.nombre %> - Unidad: <%= @departamento.identificador %> - Periodo: <%= @factura.fecha %></h4>
+
+  <div class="row">
+    <div class="col">
+      <label class="form-control control-factura">Suarez Negocios inmobiliarios</label>
+      <label class="form-control control-factura">25 de Mayo Nro 179 de 10 a 13 hs</label>
+      <label class="form-control control-factura">Tel 2494606266</label>
+      <label class="form-control control-factura">suareznegociosinmobiliarios@gmail.com</label>
+    </div>
+    <div class="col">
+      <label class="form-control control-factura"><%= @consorcio.nombre %> </label>
+      <label class="form-control control-factura">ORIGINAL</label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <label class="form-control control-factura">Periodo: <%= "#{@factura.periodo.month} - #{@factura.periodo.year}" %> </label>
+      <label class="form-control control-factura">Co-propietario: <%= @departamento.propietario%></label>
+      <label class="form-control control-factura">Unidad: <%= @departamento.identificador%></label>
+    </div>
+    <div class="col">
+      <label class="form-control control-factura">Lugar de pago: 25 de Mayo 179 </label>
+    </div>
+  </div>
+
+  <nav class="navbar-dark bg-dark subitem-factura">
+    <label>DETALLE</label>
+  </nav>
+
+  <div class="row">
+    <div class="col">
+      <label class="form-control control-factura">Gastos ordinarios: <%= "$ #{@departamento.coeficiente} % (#{@gasto_ordinario_periodo}) " %> </label>
+      <label class="form-control control-factura">Gastos extraordinarios: <%= "$ #{@departamento.coeficiente} % (#{@gasto_extraordinario_periodo}) " %> </label>
+      <label class="form-control control-factura">Saldo Anterior: $ <%= @factura.saldo_anterior %></label>
+      <label class="form-control control-factura">Intereses: $ <%= @factura.intereses %></label>
+      <label class="form-control control-factura">1er Vencimiento: <%= Date.new(@factura.periodo.year, @factura.periodo.month, 10).to_s%> </label>
+      <label class="form-control control-factura">2do Vencimiento: <%= Date.new(@factura.periodo.year, @factura.periodo.month, 20).to_s %> </label>
+    </div>
+    <div class="col">
+      <label class="form-control control-factura" id='gasto_ordinario_periodo_departamento'> $ <%= @gasto_ordinario_periodo_departamento %> </label>
+      <label class="form-control control-factura" id='gasto_extraordinario_periodo_departamento'> $ <%= @gasto_extraordinario_periodo_departamento %> </label>
+      <label class="form-control control-factura" id='saldo_anterior_subtotal'> $ <%= @factura.saldo_anterior %></label>
+      <label class="form-control control-factura" id='intereses_subtotal'> $ <%= @factura.intereses %></label>
+      <label class="form-control control-factura" id='total'> Tota a pagar: $ <%= @gasto_mensual_departamento + @factura.saldo_anterior + @factura.intereses %> </label>
+    </div>
+  </div>
+
+  <nav class="navbar-dark bg-dark subitem-factura">
+    <label>RECIBO AUTORIZADO PARA EL CO-PROPIETARIO</label>
+  </nav>
+
+  <div class="row">
+    <div class="col">
+      <label class="form-control control-factura">Fecha: <%= @factura.fecha %></label>
+      <label class="form-control control-factura">Importe Abonado: $ <%= @factura.importe_abonado %></label>
+      <label class="form-control control-factura"> Nro Recibo: <%= @factura.nro_recibo %></label>
+      <label class="form-control control-factura">Recibi Conforme: __________ </label>
+    </div>
+    <div class="col">
+      <label class="form-control control-factura"> <input type="checkbox"></input> Total </label>
+      <label class="form-control control-factura"> <input type="checkbox"> A cta exp anteriores </label>
+      <label class="form-control control-factura"> <input type="checkbox"> A cta exp futuras</label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <label class="form-control control-factura">RECIBO PARA ADMINISTRADOR</label>
+      <label class="form-control control-factura">Suarez Negocios Inmobiliarios</label>
+      <label class="form-control control-factura">Recibo Nro <%= @factura.nro_recibo %></label>
+      <label class="form-control control-factura">Co-Propietario: <%= @departamento.propietario%></label>
+      <label class="form-control control-factura">Consorcio: <%= @departamento.consorcio.nombre%></label>
+      <label class="form-control control-factura">UF: <%= @departamento.identificador%></label>
+      <label class="form-control control-factura">Depto </label>
+      <label class="form-control control-factura">Periodo Liquidacion <%= @factura.fecha%></label>
+      <label class="form-control control-factura">EXPENSAS ORDINARIAS A PAGAR </label>
+      <label class="form-control control-factura" id='total_recibo_cliente'> $ <%= @factura.importe_abonado%> </label>
+    </div>
+    <div class="col">
+      <label class="form-control control-factura">RECIBO PARA VENTANILLA DE PAGO</label>
+      <label class="form-control control-factura">Suarez Negocios Inmobiliarios</label>
+      <label class="form-control control-factura">Recibo Nro <%= @factura.nro_recibo %></label>
+      <label class="form-control control-factura">Co-Propietario: <%= @departamento.propietario%></label>
+      <label class="form-control control-factura">Consorcio: <%= @departamento.consorcio.nombre%></label>
+      <label class="form-control control-factura">UF: <%= @departamento.identificador%></label>
+      <label class="form-control control-factura">Depto </label>
+      <label class="form-control control-factura">Periodo Liquidacion <%= @factura.fecha%></label>
+      <label class="form-control control-factura">EXPENSAS ORDINARIAS A PAGAR </label>
+      <label class="form-control control-factura" id='total_recibo_rapipago'> $ <%= @factura.importe_abonado%> </label>
+    </div>
+  </div>
+</div>

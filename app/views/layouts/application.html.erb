@@ -10,6 +10,12 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-dark bg-dark" style="-webkit-print-color-adjust: exact">
+      <h2 style="color: white">
+        <%= image_pack_tag 'header_suarez.jpg' %>
+        Cristian Suarez - Negocios Inmobiliarios
+      <h2>
+    </nav>
+      <%= yield %>
   </body>
 </html>

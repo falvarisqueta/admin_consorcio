@@ -1,22 +1,23 @@
 <%= form_with(model: departamento, local: true) do |form| %>
-  <% if departamento.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(departamento.errors.count, "error") %> prohibited this departamento from being saved:</h2>
 
-      <ul>
-        <% departamento.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <nav class="navbar-dark bg-dark consorcios_menu">
+    <%= link_to 'Volver', departamento.consorcio, class:'btn btn-secondary' %>
+    <button type="submit" class="btn btn-secondary">Guardar</button>
+  </nav>
 
-  <div class="actions">
-    <%= link_to 'Volver', departamento.consorcio %>
-    <button type="submit" class="btn btn-primary">Guardar</button>
-  </div>
+  <div class="consorcios_form">
+    <% if departamento.errors.any? %>
+      <div id="error_explanation">
+        <ul>
+          <% departamento.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-  <div>
+    <h4>Consorcio: <%= @departamento.consorcio.nombre %> - Unidad: <%= @departamento.identificador %></h4>
+
     <div class="form-group">
       <%= form.hidden_field :consorcio_id %>
     </div>
@@ -36,32 +37,32 @@
       <%= form.label :coeficiente %>
       <%= form.text_field :coeficiente, class: 'form-control'%>
     </div>
-  </div>
 
-  <h2>Facturas</h2>
-  <table>
-    <thead>
-      <tr>
-        <td>Departamento</td>
-        <td>Periodo</td>
-        <td>Importe</td>
-        <td>Estado</td>
-        <th colspan="2"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% departamento.facturas.each do |factura| %>
+    <h4>Facturas</h4>
+    <table class="table">
+      <thead class="thead-light">
         <tr>
-          <td><%= factura.departamento.identificador %></td>
-          <td><%= factura.fecha_periodo %></td>
-          <td><%= factura.importe %></td>
-          <td><%= factura.estado %></td>
-          <td>
-            <%= link_to 'Ver', factura , target: :_blank%>
-            <%= link_to 'Eliminar', factura, method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
+          <th>Departamento</th>
+          <th>Periodo</th>
+          <th>Importe</th>
+          <th>Estado</th>
+          <th colspan="2"></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% departamento.facturas.each do |factura| %>
+          <tr>
+            <td><%= factura.departamento.identificador %></td>
+            <td><%= factura.fecha_periodo %></td>
+            <td><%= factura.importe %></td>
+            <td><%= factura.estado %></td>
+            <td>
+              <%= link_to 'Ver', factura , target: :_blank%>
+              <%= link_to 'Eliminar', factura, method: :delete, data: { confirm: 'Are you sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>

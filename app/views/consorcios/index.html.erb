@@ -1,32 +1,31 @@
-<p id="notice"><%= notice %></p>
 
-<h1>Consorcios</h1>
+<nav class="navbar-dark bg-dark consorcios_menu">
+  <%= link_to 'Nuevo Consorcio', new_consorcio_path, class: 'btn btn-secondary' %>
+</nav>
 
-<div>
-  <%= link_to 'Nuevo Consorcio', new_consorcio_path %>
-</div>
+<div class="consorcios_form">
+  <h4>Listado Consorcios</h4>
 
-<br/>
-
-<table>
-  <thead>
-    <tr>
-      <td>Nombre</td>
-      <td>Direccion</td>
-      <th colspan="2"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @consorcios.each do |consorcio| %>
+  <table class="table">
+    <thead class="thead-light">
       <tr>
-        <td><%= consorcio.nombre %></td>
-        <td><%= consorcio.direccion %></td>
-        <td><%= link_to 'Editar', consorcio %></td>
-        <td><%= link_to 'Eliminar', consorcio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Nombre</th>
+        <th>Direccion</th>
+        <th colspan="2"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @consorcios.each do |consorcio| %>
+        <tr>
+          <td><%= consorcio.nombre %></td>
+          <td><%= consorcio.direccion %></td>
+          <td>
+            <i class="fab fa-facebook-f fa-3x mx-2"></i>
+            <%= link_to 'Editar', consorcio, class: 'fa fa-check'%></td>
+          <td><%= link_to 'Eliminar', consorcio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

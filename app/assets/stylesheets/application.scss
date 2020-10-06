@@ -1,0 +1,31 @@
+@import "bootstrap/scss/bootstrap";
+
+@media print {
+    .navbar {
+        display: block;
+        border-width:0 !important;
+    }
+    .navbar-toggle {
+        display:none;
+    }
+}
+
+.consorcios_form {
+  padding:15px
+}
+
+.consorcios_menu {
+  padding-left:15px;
+  padding-bottom: 15px;
+}
+
+.control-factura {
+  border: none;
+}
+
+.subitem-factura {
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  -webkit-print-color-adjust: exact
+}

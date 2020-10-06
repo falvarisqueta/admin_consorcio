@@ -1,97 +1,98 @@
+
 <%= form_with(model: consorcio, local: true) do |form| %>
-  <% if consorcio.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(consorcio.errors.count, "error") %> prohibited this consorcio from being saved:</h2>
-
-      <ul>
-        <% consorcio.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= link_to 'Volver', consorcios_path %>
-    <button type="submit" class="btn btn-primary">Guardar</button>
+  <nav class="navbar-dark bg-dark consorcios_menu">
+    <%= link_to 'Volver', consorcios_path, class: 'btn btn-secondary'%>
+    <button type="submit" class="btn btn-secondary">Guardar</button>
     <% unless consorcio.new_record? %>
-    <%= link_to 'Nueva Unidad', new_departamento_path(consorcio_id: consorcio.id) %>
-    <%= link_to 'Nuevo Gasto', new_gasto_path(consorcio_id: consorcio.id) %>
-    <%= link_to 'Contabilidad', contabilidad_consorcio_path(@consorcio) %>
+      <%= link_to 'Nueva Unidad', new_departamento_path(consorcio_id: consorcio.id), class: 'btn btn-secondary' %>
+      <%= link_to 'Nuevo Gasto', new_gasto_path(consorcio_id: consorcio.id), class: 'btn btn-secondary' %>
+      <%= link_to 'Contabilidad', contabilidad_consorcio_path(consorcio), class: 'btn btn-secondary' %>
     <% end %>
-  </div>
+  </nav>
 
-  <div>
-    <div class="form-group">
-      <%= form.label :nombre %>
-      <%= form.text_field :nombre, class: 'form-control'%>
+  <div class="consorcios_form">
+    <h4>Consorcio <%= @consorcio.nombre %></h4>
+
+    <% if consorcio.errors.any? %>
+      <div id="error_explanation">
+        <ul>
+          <% consorcio.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+      <div class="form-group">
+        <%= form.label :nombre %>
+        <%= form.text_field :nombre, class: 'form-control'%>
+      </div>
+      <div class="form-group">
+        <%= form.label :direccion %>
+        <%= form.text_field :direccion, class: 'form-control'%>
+      </div>
     </div>
-    <div class="form-group">
-      <%= form.label :direccion %>
-      <%= form.text_field :direccion, class: 'form-control'%>
-    </div>
-  </div>
 
-  <% unless consorcio.new_record?
-     importe_parcial_mes = @gastos.sum(&:importe)
-  %>
+    <% unless consorcio.new_record?
+       importe_parcial_mes = @gastos.sum(&:importe)
+    %>
 
-
-  <h4>Gastos del Mes - Parcial: <%= importe_parcial_mes %> </h4>
-  <table>
-    <thead>
-      <tr>
-        <td>Fecha Gasto</td>
-        <td>Fecha Cobro</td>
-        <td>Tipo</td>
-        <td>Descripcion</td>
-        <td>Importe</td>
-        <th colspan="2"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @gastos.each do |gasto| %>
+    <h4>Gastos del Mes - Parcial: <%= importe_parcial_mes %> </h4>
+    <table class="table">
+      <thead class="thead-light">
         <tr>
-          <td><%= gasto.fecha %></td>
-          <td><%= gasto.fecha_cobro %></td>
-          <td><%= gasto.tipo %></td>
-          <td><%= gasto.descripcion %></td>
-          <td><%= gasto.importe %></td>
-
-          <td><%= link_to 'Ver', gasto %></td>
-          <td><%= link_to 'Eliminar', gasto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <th>Fecha Gasto</th>
+          <th>Fecha Cobro</th>
+          <th>Tipo</th>
+          <th>Descripcion</th>
+          <th>Importe</th>
+          <th colspan="2"></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @gastos.each do |gasto| %>
+          <tr>
+            <td><%= gasto.fecha %></td>
+            <td><%= gasto.fecha_cobro %></td>
+            <td><%= gasto.tipo %></td>
+            <td><%= gasto.descripcion %></td>
+            <td><%= gasto.importe %></td>
+
+            <td><%= link_to 'Ver', gasto %></td>
+            <td><%= link_to 'Eliminar', gasto, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
 
-  <h4>Unidades</h4>
-  <table>
-    <thead>
-      <tr>
-        <td>Identificador</td>
-        <td>Propietario</td>
-        <td>Inquilino</td>
-        <td>Coeficiente</td>
-        <td>Importe Parcial</td>
-        <th colspan="2"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% consorcio.departamentos.each do |departamento| %>
+    <h4>Unidades</h4>
+    <table class="table">
+      <thead class="thead-light">
         <tr>
-          <td><%= departamento.identificador %></td>
-          <td><%= departamento.propietario %></td>
-          <td><%= departamento.inquilino %></td>
-          <td><%= departamento.coeficiente %></td>
-          <td><%= importe_parcial_mes * departamento.coeficiente / 100 %></td>
-          <td><%= link_to 'Ver', departamento %></td>
-          <td><%= link_to 'Eliminar', departamento, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <th>Identificador</th>
+          <th>Propietario</th>
+          <th>Inquilino</th>
+          <th>Coeficiente</th>
+          <th>Importe Parcial</th>
+          <th colspan="2"></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-
+      </thead>
+      <tbody>
+        <% consorcio.departamentos.each do |departamento| %>
+          <tr>
+            <td><%= departamento.identificador %></td>
+            <td><%= departamento.propietario %></td>
+            <td><%= departamento.inquilino %></td>
+            <td><%= departamento.coeficiente %></td>
+            <td><%= importe_parcial_mes * departamento.coeficiente / 100 %></td>
+            <td><%= link_to 'Ver', departamento %></td>
+            <td><%= link_to 'Eliminar', departamento, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   <% end %>
+  </div>
 <% end %>
