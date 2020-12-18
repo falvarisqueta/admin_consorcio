@@ -26,11 +26,11 @@
     </div>
     <div class="form-group">
       <%= form.label :fecha_gasto %>
-      <%= form.date_select :fecha, start_year:2020, end_year: Date.today.year, selected: Date.today, class: 'form-control' %>
+      <%= form.date_select :fecha, start_year: Date.today.year, end_year: 1.year.from_now.year, selected: Date.today, class: 'form-control' %>
     </div>
     <div class="form-group">
       <%= form.label :fecha_cobro %>
-      <%= form.date_select :fecha_cobro, start_year:2020, end_year: Date.today.year, selected: Date.today, class: 'form-control' %>
+      <%= form.date_select :fecha_cobro, start_year: Date.today.year, end_year: 1.year.from_now.year, selected: Date.today, class: 'form-control' %>
     </div>
     <div class="form-group">
       <%= form.label :descripcion %>
